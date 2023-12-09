@@ -1,0 +1,7 @@
+2023-12-09 11:27:52.189319
+points: 7. 
+message: Checkin! Got 7 Points. 
+left days: 199.0000000000000000. 
+   方糖(SCT229153TJ3q5SfKakwoKelVBcyMe4D86): {"code":0,"message":"","data":{"pushid":"148410981","readkey":"SCTVW3gPTmSjLrZ","error":"SUCCESS","errno":0}}
+
+

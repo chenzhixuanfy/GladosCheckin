@@ -1,12 +1,10 @@
 import requests
-import re
-import os
-import sys
-import time
 import datetime
 import threading
 import random
 import json
+import os
+import sys
 
 class GladosCheckin:
     def __init__(self):
@@ -52,7 +50,18 @@ class GladosCheckin:
     def func_timer(self):
         random_time = random.uniform(-1800,1800)# 小数的秒数，更不容易被发现
         
-        self.crawling()
+        try:
+            self.crawling()
+        except Exception:
+            except_type, except_value, except_traceback = sys.exc_info()
+            except_file = os.path.split(except_traceback.tb_frame.f_code.co_filename)[1]
+            exc_dict = {
+                "报错类型": except_type,
+                "报错信息": except_value,
+                "报错文件": except_file,
+                "报错行数": except_traceback.tb_lineno,
+            }
+            self.write_log(str(exc_dict))
 
         # 定时器构造函数主要有2个参数，第一个参数为时间，第二个参数为函数名
         self.timer = threading.Timer(self.Period*3600+random_time, self.func_timer)   # 每过一段随机时间（单位：秒）调用一次函数
@@ -65,7 +74,7 @@ class GladosCheckin:
         with open("log.txt", "w"):
             pass
         # 读取文件数据
-        with open("user_data.json", 'r', encoding="utf-8") as f:
+        with open("config.json", 'r', encoding="utf-8") as f:
             user_data = json.load(f)
         self.headers["Cookie"] = user_data["Cookie"]
         self.SendKey = user_data["SendKey"]
